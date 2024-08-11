@@ -51,6 +51,8 @@ if __name__ == '__main__':
               f"Train Loss: {train_loss:.4f}, "
               f"Val Loss: {val_loss:.4f}, "
               f"Val-Train Loss : {val_loss-train_loss:.4f}")
+    
+    model_ext = "onnx"
     model_save(
         model=model,
         model_params=model_params,
@@ -59,6 +61,7 @@ if __name__ == '__main__':
         loss=train_loss,
         scaler=train_dataset.scaler,
         contents_id_map=train_dataset.contents_id_map,
+        ext=model_ext,
     )
     # 테스트
     model.eval()
