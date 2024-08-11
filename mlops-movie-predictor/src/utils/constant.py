@@ -30,3 +30,5 @@ class Optimizers(CustomEnum):
     SPARSEADAM = optim.SparseAdam
     SGD = optim.SGD
     RMSPROP = optim.RMSprop
+    
+    #생성
