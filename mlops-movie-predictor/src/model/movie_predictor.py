@@ -1,6 +1,26 @@
 import torch.nn as nn
+import os
+import datetime
+import torch
 
+from src.utils.utils import model_dir
 
+def model_save(model, model_params, epoch, optimizer, loss, scaler, contents_id_map):
+    save_dir = model_dir(model.name)
+    os.makedirs(save_dir, exist_ok=True)
+
+    current_time = datetime.datetime.now().strftime("%y%m%d%H%M%S")
+    dst = os.path.join(save_dir, f"E{epoch}_T{current_time}.pth")
+    torch.save({
+        "epoch": epoch,
+        "model_params": model_params,
+        "model_state_dict": model.state_dict(),
+        "optimizer_state_dict": optimizer.state_dict(),
+        "loss": loss,
+        "scaler": scaler,
+        "contents_id_map": contents_id_map,
+    }, dst)
+    
 class MoviePredictor(nn.Module):
     name = "movie_predictor"
     
