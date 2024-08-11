@@ -11,10 +11,12 @@ import torch.optim as optim
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 import fire
+import wandb
+from dotenv import load_dotenv
 
 from src.dataset.watch_log import get_datasets
 from src.model.movie_predictor import MoviePredictor
-from src.utils.utils import init_seed
+from src.utils.utils import init_seed, auto_increment_run_suffix
 from src.train.train import train
 from src.evaluate.evaluate import evaluate
 from src.utils.constant import Optimizers, Models
@@ -22,11 +24,38 @@ from src.utils.constant import Optimizers, Models
 from src.model.movie_predictor import MoviePredictor, model_save
 
 init_seed()
+load_dotenv()
 
+def get_runs(project_name):
+    return wandb.Api().runs(path=project_name, order="-created_at")
+
+def get_latest_run(project_name):
+    runs = get_runs(project_name)
+    if not runs:
+        return f"{project_name}-001"
+
+    return runs[0].name
+    
 
 def run_train(model_name, optimizer, num_epochs=10, lr=0.001, model_ext="pth"):
     Models.validation(model_name)
     Optimizers.validation(optimizer)
+
+    api_key = os.environ["WANDB_API_KEY"]
+    wandb.login(key=api_key)
+
+    project_name = model_name.replace("_", "-")
+    run_name = get_latest_run(project_name)
+    next_run_name = auto_increment_run_suffix(run_name)
+
+    wandb.init(
+        project=project_name,
+        id = next_run_name,
+        name=next_run_name,
+        notes="content-based movie recommend model",
+        tags=["content-based", "movie", "recommend"],
+        config=locals(),
+    )
 
     # 데이터셋 및 DataLoader 생성
     train_dataset, val_dataset, test_dataset = get_datasets()
@@ -59,6 +88,9 @@ def run_train(model_name, optimizer, num_epochs=10, lr=0.001, model_ext="pth"):
               f"Train Loss: {train_loss:.4f}, "
               f"Val Loss: {val_loss:.4f}, "
               f"Val-Train Loss : {val_loss-train_loss:.4f}")
+        wandb.log({"Loss/Train": train_loss})
+        wandb.log({"Loss/Valid": val_loss})
+
     
     model_ext = "onnx"
     model_save(
@@ -72,8 +104,13 @@ def run_train(model_name, optimizer, num_epochs=10, lr=0.001, model_ext="pth"):
         ext=model_ext,
     )
 
+
+def run_preprocessing(date="240809"):
+    pass
+
 if __name__ == '__main__':
     fire.Fire({
+        "preprocessing": run_preprocessing,
         "train": run_train,
     })
     # 테스트

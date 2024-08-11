@@ -1,0 +1,62 @@
+{
+    "os": "Linux-6.8.0-1012-aws-x86_64-with-glibc2.28",
+    "python": "3.11.4",
+    "heartbeatAt": "2024-08-11T08:04:36.512936",
+    "startedAt": "2024-08-11T08:04:35.851129",
+    "docker": null,
+    "cuda": null,
+    "args": [
+        "train",
+        "--model_name",
+        "movie_predictor",
+        "--optimizer",
+        "adam",
+        "--num_epochs",
+        "30",
+        "--batch_size",
+        "64",
+        "--lr",
+        "0.001"
+    ],
+    "state": "running",
+    "program": "/opt/mlops-movie-predictor/src/main.py",
+    "codePathLocal": "main.py",
+    "codePath": "main.py",
+    "git": {
+        "remote": "https://github.com/WestDragonWon/MLOps-begginer.git",
+        "commit": "648d6a75f80b4a4e4d4cc6a8c3c824c5ef2df7f9"
+    },
+    "email": "westdragonwon@gmail.com",
+    "root": "/opt/mlops-movie-predictor/src",
+    "host": "66d6b9127725",
+    "username": "root",
+    "executable": "/usr/local/bin/python",
+    "cpu_count": 1,
+    "cpu_count_logical": 2,
+    "cpu_freq": {
+        "current": 2499.996,
+        "min": 0.0,
+        "max": 0.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 2499.996,
+            "min": 0.0,
+            "max": 0.0
+        },
+        {
+            "current": 2499.996,
+            "min": 0.0,
+            "max": 0.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 47.38951873779297,
+            "used": 12.701175689697266
+        }
+    },
+    "memory": {
+        "total": 7.637622833251953
+    }
+}
