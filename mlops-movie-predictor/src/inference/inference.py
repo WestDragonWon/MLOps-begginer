@@ -100,7 +100,7 @@ def inference_onnx(scaler, contents_id_map, data):
 
     return dataset.decode_content_id(predictions[0])
 
-def recomment_to_df(recommend: list):
+def recommend_to_df(recommend):
     return pd.DataFrame(
         data=recommend,
         columns="recommend_content_id".split()
@@ -115,5 +115,5 @@ if __name__ == '__main__':
         model, criterion, scaler, contents_id_map, data=np.array([]), batch_size=64
     )
     ic(recommend) # {"d1: {"d2": {"d3": value}}} #print(a["d1"]["d2"]["d3"])
-    recommend_df = recomment_to_df(recommend)
+    recommend_df = recommend_to_df(recommend)
     write_db(recommend_df, "mlops", "recommend")

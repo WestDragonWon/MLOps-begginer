@@ -34,3 +34,4 @@ def read_db(db_name, table_name, k=10):
     connect.close()
     contents = [data[0] for data in result]
     return contents
+
