@@ -17,7 +17,7 @@ import numpy as np
 
 from src.dataset.watch_log import get_datasets
 from src.model.movie_predictor import MoviePredictor, model_save
-from src.utils.utils import init_seed, auto_increment_run_suffix
+from src.utils.utils import init_seed, model_dir, auto_increment_run_suffix, parse_date
 from src.train.train import train
 from src.evaluate.evaluate import evaluate
 from src.utils.constant import Optimizers, Models
@@ -111,8 +111,11 @@ def run_train(model_name, optimizer, batch_size=64, num_epochs=10, lr=0.001, mod
     )
 
 
-def run_preprocessing(date="240809"):
-    pass
+def run_preprocessing(date):
+    parsed_date = parse_date(date)
+    print(f"Run date : {parsed_date.year}. {parsed_date.month}. {parsed_date.day}")
+    print("Run some preprocessing...")
+    print("Done!")
 
 
 def run_inference(data=None, batch_size=64):
@@ -130,7 +133,7 @@ def run_inference(data=None, batch_size=64):
     write_db(recommend_to_df(recommend), "mlops", "recommend")
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     fire.Fire({
         "preprocessing": run_preprocessing,
         "train": run_train,

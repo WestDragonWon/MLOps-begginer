@@ -1,9 +1,15 @@
 import os
 import random
 import hashlib
+from datetime import datetime
 
 import numpy as np
 import torch
+
+def parse_date(date: str):
+    date_format = "%y%m%d"
+    parsed_date = datetime.strptime(str(date).replace("-", ""), date_format)
+    return parsed_date
 
 
 def init_seed():
