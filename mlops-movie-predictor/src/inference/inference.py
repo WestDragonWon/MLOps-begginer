@@ -20,11 +20,13 @@ import pandas as pd
 import onnx
 import onnxruntime
 from icecream import ic
+from dotenv import load_dotenv
 
 from src.utils.utils import model_dir, calculate_hash, read_hash
 from src.model.movie_predictor import MoviePredictor
 from src.dataset.watch_log import WatchLogDataset, get_datasets
 from src.evaluate.evaluate import evaluate
+from src.postprocess.postprocess import write_db
 
 def model_validation(model_path):
     original_hash = read_hash(model_path)
@@ -98,8 +100,14 @@ def inference_onnx(scaler, contents_id_map, data):
 
     return dataset.decode_content_id(predictions[0])
 
+def recomment_to_df(recommend: list):
+    return pd.DataFrame(
+        data=recommend,
+        columns="recommend_content_id".split()
+    )
 
 if __name__ == '__main__':
+    load_dotenv()
     checkpoint = load_checkpoint()
     model, criterion, scaler, contents_id_map = init_model(checkpoint)
     data = np.array([1, 1209290, 4508, 7.577, 1204.764])
@@ -107,3 +115,5 @@ if __name__ == '__main__':
         model, criterion, scaler, contents_id_map, data=np.array([]), batch_size=64
     )
     ic(recommend) # {"d1: {"d2": {"d3": value}}} #print(a["d1"]["d2"]["d3"])
+    recommend_df = recomment_to_df(recommend)
+    write_db(recommend_df, "mlops", "recommend")
