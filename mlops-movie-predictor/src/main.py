@@ -91,8 +91,7 @@ def run_train(model_name, optimizer, num_epochs=10, lr=0.001, model_ext="pth"):
         wandb.log({"Loss/Train": train_loss})
         wandb.log({"Loss/Valid": val_loss})
 
-    
-    model_ext = "onnx"
+
     model_save(
         model=model,
         model_params=model_params,
@@ -113,6 +112,7 @@ if __name__ == '__main__':
         "preprocessing": run_preprocessing,
         "train": run_train,
     })
+    
     # 테스트
     # model.eval()
     # test_loss, predictions = evaluate(model, test_loader, criterion)

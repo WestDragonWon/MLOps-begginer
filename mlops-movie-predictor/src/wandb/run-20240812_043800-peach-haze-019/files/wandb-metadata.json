@@ -1,8 +1,8 @@
 {
     "os": "Linux-6.8.0-1012-aws-x86_64-with-glibc2.28",
     "python": "3.11.4",
-    "heartbeatAt": "2024-08-11T08:04:36.512936",
-    "startedAt": "2024-08-11T08:04:35.851129",
+    "heartbeatAt": "2024-08-12T04:38:01.659445",
+    "startedAt": "2024-08-12T04:38:00.926478",
     "docker": null,
     "cuda": null,
     "args": [
@@ -13,8 +13,6 @@
         "adam",
         "--num_epochs",
         "30",
-        "--batch_size",
-        "64",
         "--lr",
         "0.001"
     ],
@@ -34,18 +32,18 @@
     "cpu_count": 1,
     "cpu_count_logical": 2,
     "cpu_freq": {
-        "current": 2499.996,
+        "current": 2499.992,
         "min": 0.0,
         "max": 0.0
     },
     "cpu_freq_per_core": [
         {
-            "current": 2499.996,
+            "current": 2499.992,
             "min": 0.0,
             "max": 0.0
         },
         {
-            "current": 2499.996,
+            "current": 2499.992,
             "min": 0.0,
             "max": 0.0
         }
@@ -53,10 +51,10 @@
     "disk": {
         "/": {
             "total": 47.38951873779297,
-            "used": 12.701175689697266
+            "used": 12.982707977294922
         }
     },
     "memory": {
-        "total": 7.637622833251953
+        "total": 7.6376190185546875
     }
 }

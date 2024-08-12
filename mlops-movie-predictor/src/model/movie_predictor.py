@@ -3,7 +3,7 @@ import os
 import datetime
 import torch
 
-from src.utils.utils import model_dir
+from src.utils.utils import model_dir, save_hash
 
 def model_save(model, model_params, epoch, optimizer, loss, scaler, contents_id_map, ext="pth"):
     save_dir = model_dir(model.name)
@@ -33,6 +33,7 @@ def model_save(model, model_params, epoch, optimizer, loss, scaler, contents_id_
     else:
         raise ValueError(f"Invalid model export extension: {ext}")
 
+    save_hash(dst)
 class MoviePredictor(nn.Module):
     name = "movie_predictor"
     
